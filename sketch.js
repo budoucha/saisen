@@ -7,7 +7,6 @@ function preload() {
 }
 
 function setup() {
-  touch = false;
   n = allSprites.length;
   for (i = 0; i < n; i++) {
     allSprites[0].remove();
@@ -23,9 +22,9 @@ function setup() {
   saisens = new Group();
   saisenbako = createSprite(width / 2, height / 4, 1, 1);
   saisenbako.addImage(boxImg);
-  tonyuguchi=saisenbako.height*0.4;
-  saisenbakoOffset= -(saisenbako.height-tonyuguchi*1.2)/2
-  saisenbako.setCollider("rectangle", 0, saisenbakoOffset, saisenbako.width-coinImg.width*2,tonyuguchi);
+  tonyuguchi = saisenbako.height * 0.4;
+  saisenbakoOffset = -(saisenbako.height - tonyuguchi * 1.2) / 2
+  saisenbako.setCollider("rectangle", 0, saisenbakoOffset, saisenbako.width - coinImg.width * 2, tonyuguchi);
 
   useQuadTree(false);
 
@@ -44,6 +43,7 @@ function draw() {
     image(tutoImg, width / 2, height / 2);
   }
 
+  touch = (mouseIsPressed && mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height);
   if (touch || keyDown("SPACE")) {
     throwSaisen();
   }
@@ -61,7 +61,7 @@ function throwSaisen() {
   saisen = createSprite(mouseX + randomGaussian(0, 5), mouseY + randomGaussian(0, 5), 1, 1);
   saisen.addImage(coinImg);
   saisen.life = 64;
-  speed=tonyuguchi*0.6
+  speed = tonyuguchi * 0.6
   angle = HALF_PI - atan2(saisenbako.position.x - mouseX, saisenbako.position.y + saisenbakoOffset - mouseY);
   saisen.velocity.x = speed * cos(angle);
   saisen.velocity.y = speed * sin(angle);
@@ -73,16 +73,4 @@ function charin(saisenbako, saisen) {
   s1.play();
   saisen.remove();
   kingaku += 5;
-}
-
-
-function touchStarted() {
-  touch = true;
-  if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
-    return false;
-  }
-}
-
-function touchEnded() {
-  touch = false;
 }

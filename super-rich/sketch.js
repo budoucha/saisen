@@ -7,7 +7,6 @@ function preload() {
 }
 
 function setup() {
-  touch = false;
   n = allSprites.length;
   for (i = 0; i < n; i++) {
     allSprites[0].remove();
@@ -48,6 +47,7 @@ function draw() {
   }
   else { drawBg(); }
 
+  touch = (mouseIsPressed && mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height);
   if (touch || keyDown("SPACE")) {
     throwSaisen();
   }
@@ -80,18 +80,6 @@ function charin(saisenbako, saisen) {
   s1.play();
   saisen.remove();
   kingaku += 5000;
-}
-
-
-function touchStarted() {
-  touch = true;
-  if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
-    return false;
-  }
-}
-
-function touchEnded() {
-  touch = false;
 }
 
 function drawBg() {
