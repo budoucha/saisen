@@ -34,6 +34,7 @@ function setup() {
   imageMode(CENTER);
 
   kingaku = 0;
+  bg = 255;
 
   colorMode(HSB);
   background(180, 100, 100);
@@ -41,14 +42,15 @@ function setup() {
 }
 
 function draw() {
+  background(bg);
   if (kingaku === 0) {
     background(255);
     image(tutoImg, width / 2, height / 2);
   }
-  else { drawBg(); }
 
   touch = (mouseIsPressed && mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height);
   if (touch || keyDown("SPACE")) {
+    drawBg();
     throwSaisen();
   }
 
