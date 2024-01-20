@@ -87,9 +87,9 @@ function charin(saisenbako, saisen) {
 function drawBg() {
   push();
   steps = 36;
-  weight = long / steps;
+  weight = Math.ceil(long / steps);
   strokeWeight(weight);
-  for (i = 0; i < steps; i++) {
+  for (i = 0; i < steps+1; i++) {
     stroke(360 - (-i + frameCount * 5) % 360, 100, 100);
     line(0, i * weight, long, i * weight);
   }
