@@ -1,9 +1,14 @@
+let voicesCooltime = 50;
+let voicesReload = voicesCooltime;
+let voicesSounds = [];
+
 function preload() {
   pixelDensity(1);
   moneyImg = loadImage("data/5000chou.png");
   boxImg = loadImage("data/saisenbako.png");
   tutoImg = loadImage("data/tuto.png");
-  s1 = loadSound('data/money-drop2.mp3');
+  saisenSound = loadSound('data/money-drop2.mp3');
+  voicesSounds = [loadSound('data/voices.mp3'), loadSound('data/voices2.mp3')];
 }
 
 function setup() {
@@ -28,8 +33,14 @@ function setup() {
 
   useQuadTree(false);
 
-  s1.setVolume(0.1);
-  s1.playMode('sustain');
+  saisenSound.setVolume(0.1);
+  saisenSound.playMode('sustain');
+  voicesSounds.forEach(
+    function (sound) {
+      sound.setVolume(0.1);
+      sound.playMode('sustain');
+    }
+  );
 
   imageMode(CENTER);
 
@@ -51,6 +62,8 @@ function draw() {
   touch = (mouseIsPressed && mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height);
   if (touch || keyDown("SPACE")) {
     drawBg();
+    voicesReload--;
+    playVoices();
     throwSaisen();
   }
 
@@ -79,7 +92,7 @@ function throwSaisen() {
 }
 
 function charin(saisenbako, saisen) {
-  s1.play();
+  saisenSound.play();
   saisen.remove();
   kingaku += 5000;
 }
@@ -89,9 +102,17 @@ function drawBg() {
   steps = 36;
   weight = Math.ceil(long / steps);
   strokeWeight(weight);
-  for (i = 0; i < steps+1; i++) {
+  for (i = 0; i < steps + 1; i++) {
     stroke(360 - (-i + frameCount * 5) % 360, 100, 100);
     line(0, i * weight, long, i * weight);
   }
   pop();
+}
+
+function playVoices() {
+  voices = voicesSounds[Math.floor(Math.random() * voicesSounds.length)];
+  if (!voices.isPlaying() || voicesReload < 0) {
+    voices.play();
+    voicesReload = (voicesCooltime - 10) * Math.random() + 10;
+  }
 }
