@@ -33,13 +33,13 @@ function setup() {
 
   imageMode(CENTER);
 
-  kingaku = 0;
+  score = 0;
   bg = 255;
 }
 
 function draw() {
   background(bg);
-  if (kingaku === 0) {
+  if (score === 0) {
     image(tutoImg, width / 2, height / 2);
   }
 
@@ -54,7 +54,8 @@ function draw() {
   fill(0);
   textSize(24);
   textAlign(CENTER);
-  text('￥' + kingaku + "000000", width / 2, height * 0.8);
+  const kingaku = score > 0 ? `￥${score.toLocaleString()},000,000` : '￥0';
+  text(kingaku, width / 2, height * 0.8);
 }
 
 function throwSaisen() {
@@ -72,5 +73,5 @@ function throwSaisen() {
 function charin(saisenbako, saisen) {
   s1.play();
   saisen.remove();
-  kingaku += 1;
+  score += 1;
 }

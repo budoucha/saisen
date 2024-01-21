@@ -76,7 +76,7 @@ function draw() {
   strokeWeight(2);
   stroke(255);
   var chou = kingaku > 0 ? "兆" : "";
-  text(kingaku + chou + "円", width / 2, height * 0.8);
+  text(kingaku.toLocaleString() + chou + "円", width / 2, height * 0.8);
 }
 
 function throwSaisen() {
